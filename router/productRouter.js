@@ -6,6 +6,7 @@ const { validateProduct, nameVerifier } = require('../middlewares/validations');
 const router = express.Router();
 
 router.get('/:id', productController.getById);
+router.put('/:id', productController.updateProduct);
 router.get('/', productController.getAll);
 router.post('/', nameVerifier, validateProduct, productController.createProduct);
 
