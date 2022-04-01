@@ -19,6 +19,7 @@ const getById = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name, quantity } = req.body;
   const newProduct = await productServices.createProduct({ name, quantity });
+  
   if (!newProduct) {
     return res.status(404).json({ message: 'Deu ruim' });
   }
