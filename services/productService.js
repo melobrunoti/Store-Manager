@@ -31,6 +31,16 @@ const updateProduct = async ({ name, quantity, id }) => {
   return updatedProduct;
 };
 
+const deleteProduct = async (id) => {
+  const products = await productModel.getAll();
+  const productExist = products.some((p) => p.id === Number(id));
+  await productModel.deleteProduct(id);
+  if (!productExist) {
+    return false;
+  }
+  return true;
+};
+
 const nameValidator = async (name) => {
   const products = await productModel.getAll();
   const result = products.some((p) => p.name === name);
@@ -43,4 +53,5 @@ module.exports = {
   createProduct,
   nameValidator,
   updateProduct,
+  deleteProduct,
 };
