@@ -49,7 +49,6 @@ const createSale = async (items) => {
 };
 
 const updateSale = async (items, id) => {
-
   await Promise.all(items.map(async ({ productId, quantity }) => {
     await connection.execute(`
     UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`,
