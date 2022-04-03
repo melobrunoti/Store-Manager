@@ -7,8 +7,8 @@ const getAll = async () => {
     s.date,
     sp.product_id as productId,
     sp.quantity
-    FROM sales s
-    JOIN sales_products sp
+    FROM StoreManager.sales s
+    JOIN StoreManager.sales_products sp
     ON sp.sale_id = s.id
     ORDER BY saleId, ProductId;`,
   );
@@ -21,8 +21,8 @@ const getById = async (id) => {
     sp.product_id as productId,
     sp.quantity,
     s.date
-    FROM sales s
-    JOIN sales_products sp
+    FROM StoreManager.sales s
+    JOIN StoreManager.sales_products sp
     ON sp.sale_id = s.id
     WHERE s.id = ?`, [id],
   );
@@ -32,12 +32,12 @@ const getById = async (id) => {
 
 const createSale = async (items) => {
   const [sale] = await connection.execute(
-    'INSERT INTO sales (date) VALUES (NOW())',
+    'INSERT INTO StoreManager.sales (date) VALUES (NOW())',
   );
 
   await Promise.all(items.map(async ({ productId, quantity }) => {
     await connection.execute(`
-    INSERT INTO sales_products (sale_id, product_id, quantity)
+    INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
     VALUES (?, ?, ?);`,
     [sale.insertId, productId, quantity]);
   }));
@@ -51,7 +51,7 @@ const createSale = async (items) => {
 const updateSale = async (items, id) => {
   await Promise.all(items.map(async ({ productId, quantity }) => {
     await connection.execute(`
-    UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`,
+    UPDATE StoreManager.sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`,
     [productId, quantity, id]);
   }));
 

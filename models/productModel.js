@@ -2,21 +2,21 @@ const connection = require('./connection');
 
 const getAll = async () => {
   const [products] = await connection.execute(
-    'SELECT * FROM products ORDER BY id;',
+    'SELECT * FROM StoreManager.products ORDER BY id;',
   );
   return products;
 };
 
 const getById = async (id) => {
   const [[product]] = await connection.execute(
-    'SELECT * FROM products WHERE id = ?', [id],
+    'SELECT * FROM StoreManager.products WHERE id = ?', [id],
   );
   return product;
 };
 
 const createProduct = async ({ name, quantity }) => {
   const [{ insertId }] = await connection.execute(
-    'INSERT INTO products (name, quantity) VALUES (?, ?);',
+    'INSERT INTO StoreManager.products (name, quantity) VALUES (?, ?);',
     [name, quantity],
     );
 
@@ -25,7 +25,7 @@ const createProduct = async ({ name, quantity }) => {
 
 const updateProduct = async ({ name, quantity, id }) => {
   await connection.execute(
-    'UPDATE products SET name = ?, quantity = ? WHERE id = ?',
+    'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ?',
     [name, quantity, id],
     );
 
@@ -38,7 +38,7 @@ const updateProduct = async ({ name, quantity, id }) => {
 
 const deleteProduct = async (id) => {
   await connection.execute(
-    'DELETE FROM products WHERE id = ?',
+    'DELETE FROM StoreManager.products WHERE id = ?',
     [id],
     );
   return true;
