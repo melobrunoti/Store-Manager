@@ -30,7 +30,41 @@ const getById = async (id) => {
   return sale;
 };
 
+const createSale = async (items) => {
+  const [sale] = await connection.execute(
+    'INSERT INTO sales (date) VALUES (NOW())',
+  );
+
+  await Promise.all(items.map(async ({ productId, quantity }) => {
+    await connection.execute(`
+    INSERT INTO sales_products (sale_id, product_id, quantity)
+    VALUES (?, ?, ?);`,
+    [sale.insertId, productId, quantity]);
+  }));
+
+  return {
+    id: sale.insertId,
+    itemsSold: items,
+  };
+};
+
+const updateSale = async (items, id) => {
+
+  await Promise.all(items.map(async ({ productId, quantity }) => {
+    await connection.execute(`
+    UPDATE sales_products SET product_id = ?, quantity = ? WHERE sale_id = ?`,
+    [productId, quantity, id]);
+  }));
+
+  return {
+    saleId: id,
+    itemUpdated: items,
+  };
+};
+
 module.exports = {
   getAll,
   getById,
+  createSale,
+  updateSale,
 };
