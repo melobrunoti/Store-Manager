@@ -30,9 +30,21 @@ const updateSale = async (items, id) => {
 
   return sales;
 };
+
+const deleteSale = async (id) => {
+  const sales = await salesModel.getAll();
+  const saleExist = sales.some((s) => s.saleId === Number(id));
+  console.log(sales, id);
+  await salesModel.deleteSale(id);
+  if (!saleExist) {
+    return false;
+  }
+  return true;
+};
 module.exports = {
   getAll,
   getById,
   createSale,
   updateSale,
+  deleteSale,
 };
