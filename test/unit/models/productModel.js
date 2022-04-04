@@ -69,3 +69,18 @@ describe('Checks products updateProducts', () => {
     expect(response).to.deep.eq(fakeUpdate)
   })
 })
+
+describe('Checks  deleteProduct', () => { 
+  before(() => {
+      sinon.stub(connection, 'execute').resolves(true)
+  })
+  after(() => {
+    connection.execute.restore();
+  })
+
+  it('Delete with sucess return true', async () => {
+    const response = await productModel.deleteProduct(1);
+
+    expect(response).to.be.equal(true);
+  })
+});

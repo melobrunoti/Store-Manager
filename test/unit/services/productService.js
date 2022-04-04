@@ -76,8 +76,29 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
 
     it('when sucessfull', async () => {
       const response = await productService.updateProduct({ id: 1, name: 'A volta dos que nao foram', quantity: 10 });
-      console.log(response)
       
       expect(response).to.deep.eq({ id: 1, name: 'A volta dos que nao foram', quantity: 10 });
+    })
+  });
+
+  describe('Checks deleteProduct', () => { 
+    before(() => {
+      sinon.stub(connection, 'execute').resolves([fakeProducts]);
+      /* sinon.stub(productModel, 'getAll').resolves([fakeProducts]); */
+      sinon.stub(productModel, 'deleteProduct').resolves(true);
+     
+      
+    })
+    after(() => {
+      productModel.deleteProduct.restore();
+ /*      productModel.getAll.restore(); */
+      connection.execute.restore();
+    })
+
+    it('when sucessfull', async () => {
+      const response = await productService.deleteProduct(1);
+      console.log(response)
+      
+      expect(response).to.be.equal(true)
     })
   });
