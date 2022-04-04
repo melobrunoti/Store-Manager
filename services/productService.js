@@ -22,7 +22,7 @@ const createProduct = async ({ name, quantity }) => {
 };
 
 const updateProduct = async ({ name, quantity, id }) => {
-  const products = await productModel.getAll();
+  const products = await getAll();
   const updatedProduct = await productModel.updateProduct({ name, quantity, id });
   const productExist = products.some((p) => p.id === +id);
   if (!productExist) {

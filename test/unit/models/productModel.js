@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const productModel = require('../../../models/productModel');
 const connection = require('../../../models/connection');
-const { fakeProducts } = require('../data/mocks');
+const { fakeProducts, fakeUpdate} = require('../data/mocks');
 
 describe('Checks products getAll', () => { 
 	before(async () => {
@@ -39,3 +39,33 @@ describe('Checks  getById', () => {
     expect(response).to.deep.eq(fakeProducts[0]);
   })
 });
+
+describe('Checks products createProducts', () => { 
+	before(async () => {
+    const execute = [{insertId: 1}]
+    sinon.stub(connection, 'execute').resolves(execute);
+  })
+  after(() => {
+    connection.execute.restore();
+  })
+
+  it('when sucessfull', async () => {
+    const response = await productModel.createProduct({name: 'A volta dos que nao foram', quantity: 2});
+    expect(response).to.deep.eq({id: 1, name: 'A volta dos que nao foram', quantity: 2})
+  })
+})
+
+describe('Checks products updateProducts', () => { 
+	before(async () => {
+    sinon.stub()
+    sinon.stub(connection, 'execute').resolves(fakeUpdate);
+  })
+  after(() => {
+    connection.execute.restore();
+  })
+
+  it('when sucessfull', async () => {
+    const response = await productModel.updateProduct(fakeUpdate);
+    expect(response).to.deep.eq(fakeUpdate)
+  })
+})

@@ -46,7 +46,6 @@ describe('calls the productController getById', () => {
   it('sucess case', async () => {
     await productController.getById(request, response);
 
-    console.log(response.json)
     expect(response.status.calledWith(200)).to.be.true;
     expect(response.json.calledWith(fakeProducts[0])).to.be.true;
   })
@@ -69,7 +68,6 @@ describe('when fails', () => {
   it('fail case', async () => {
     await productController.getById(request, response);
 
-    console.log(response.json)
     expect(response.status.calledWith(404)).to.be.true;
     expect(response.json.calledWith(fakeProducts[0])).to.be.false;
   })

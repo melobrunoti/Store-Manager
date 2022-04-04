@@ -37,5 +37,7 @@ const fakeSales = [
 	}
 ]
 
+const fakeUpdate = { id: 1, name: 'A volta dos que nao foram', quantity: 10 }
 
-module.exports = { fakeProducts, fakeSales };
+
+module.exports = { fakeProducts, fakeSales, fakeUpdate };
