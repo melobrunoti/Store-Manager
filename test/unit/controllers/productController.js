@@ -72,5 +72,53 @@ describe('when fails', () => {
     expect(response.json.calledWith(fakeProducts[0])).to.be.false;
   })
 });
-});
 
+describe('Checks createProduct', () => { 
+  describe('when sucessfull', () => { 
+    const response = {};
+    const request = {};
+    beforeEach(() => {
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub()
+      request.params = { id: 1 }
+      request.body = { name: 'A volta dos que nao foram', quantity: 1 }
+      
+      sinon.stub(productService, 'createProduct').resolves(fakeProducts[0]);
+    })
+    afterEach(() => {
+      productService.createProduct.restore();
+    })
+
+    it('sucess case', async () => {
+      await productController.createProduct(request, response);
+
+      expect(response.status.calledWith(201)).to.be.true;
+      expect(response.json.calledWith(fakeProducts[0])).to.be.true;
+    })
+  });
+  });
+  describe('Checks updateProduct', () => { 
+    describe('when sucessfull', () => { 
+      const response = {};
+      const request = {};
+      beforeEach(() => {
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub()
+        request.params = { id: 1 }
+        request.body = { name: 'A volta dos que nao foram', quantity: 1 }
+        
+        sinon.stub(productService, 'updateProduct').resolves(fakeProducts[0]);
+      })
+      afterEach(() => {
+        productService.updateProduct.restore();
+      })
+  
+      it('sucess case', async () => {
+        await productController.updateProduct(request, response);
+  
+        expect(response.status.calledWith(200)).to.be.true;
+        expect(response.json.calledWith(fakeProducts[0])).to.be.true;
+      })
+    });
+});
+});
