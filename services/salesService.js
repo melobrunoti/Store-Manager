@@ -15,12 +15,18 @@ const getById = async (id) => {
 
 const createSale = async (items) => {
   const sales = await salesModel.createSale(items);
+  if (!sales) {
+    return false;
+  }
 
   return sales;
 };
 
 const updateSale = async (items, id) => {
   const sales = await salesModel.updateSale(items, id);
+  if (!sales) {
+    return false;
+  }
 
   return sales;
 };

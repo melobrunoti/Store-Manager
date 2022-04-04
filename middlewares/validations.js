@@ -1,8 +1,21 @@
 const { productScheme } = require('../helpers/productScheme');
+const { salesScheme } = require('../helpers/salesScheme');
 const { nameValidator } = require('../services/productService');
 
 const validateProduct = (req, res, next) => {
   const { error } = productScheme.validate(req.body);
+
+  if (error) {
+    if (error.message.includes('required')) {
+      return res.status(400).json({ message: error.message });
+    }
+      return res.status(422).json({ message: error.message });
+  }
+  next();
+};
+
+const saleValidate = (req, res, next) => {
+  const { error } = salesScheme.validate(req.body[0]);
 
   if (error) {
     if (error.message.includes('required')) {
@@ -27,4 +40,5 @@ const nameVerifier = async (req, res, next) => {
 module.exports = {
   validateProduct,
   nameVerifier,
+  saleValidate,
 };
