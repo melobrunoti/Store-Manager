@@ -7,8 +7,8 @@ const productModel = require('../../../models/productModel');
 const productService = require('../../../services/productService');
 
 const { fakeProducts, fakeUpdate } = require('../data/mocks');
-
-  describe('Checks products getAll ', () => { 
+describe('Service layer - Products ', () => { 
+  describe('get all products ', () => { 
     before(async () => {
       sinon.stub(productModel, 'getAll').resolves(fakeProducts);
     })
@@ -29,7 +29,7 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
     })
   })
 
-  describe('Checks  getById', () => { 
+  describe('get a product by id', () => { 
     before(() => {
         sinon.stub(productModel, 'getById').resolves(fakeProducts[0])
     })
@@ -37,14 +37,14 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
       productModel.getById.restore();
     })
 
-    it('return an array with all products', async () => {
+    it('return a product', async () => {
       const response = await productService.getById(1);
       
       expect(response).to.deep.eq(fakeProducts[0]);
     })
   })
 
-  describe('Checks createProduct', () => { 
+  describe('create a product', () => { 
     before(() => {
       sinon.stub(productModel, 'createProduct').resolves({ id: 1, name: 'A volta dos que nao foram', quantity: 1 });
 
@@ -60,7 +60,7 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
     })
   })
 
-  describe('Checks updateProduct', () => { 
+  describe('update a product', () => { 
     before(() => {
       sinon.stub(connection, 'execute').resolves([fakeProducts]);
       /* sinon.stub(productModel, 'getAll').resolves([fakeProducts]); */
@@ -81,7 +81,7 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
     })
   });
 
-  describe('Checks deleteProduct', () => { 
+  describe('delete a product', () => { 
     before(() => {
       sinon.stub(connection, 'execute').resolves([fakeProducts]);
       /* sinon.stub(productModel, 'getAll').resolves([fakeProducts]); */
@@ -101,4 +101,5 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
       expect(response).to.be.equal(true)
     })
   });
+});
 
