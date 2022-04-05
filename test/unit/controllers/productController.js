@@ -7,7 +7,7 @@ const productController = require('../../../controllers/productController');
 const { fakeProducts } = require('../data/mocks');
 
 describe('calls the productController getAll', () => { 
-  describe('when succesfull', () => { 
+  describe('return all products', () => { 
   const response = {};
   const request = {};
 	before(() => {
@@ -20,7 +20,7 @@ describe('calls the productController getAll', () => {
     productService.getAll.restore();
   })
 
-  it('sucess case', async () => {
+  it('when successful', async () => {
     await productController.getAll(request, response);
 
     expect(response.status.calledWith(200)).to.be.true;
@@ -29,7 +29,7 @@ describe('calls the productController getAll', () => {
 })
 
 describe('calls the productController getById', () => { 
-  describe('when succesfull', () => { 
+  describe('get a product', () => { 
   const response = {};
   const request = {};
 	before(() => {
@@ -43,7 +43,7 @@ describe('calls the productController getById', () => {
     productService.getById.restore();
   })
 
-  it('sucess case', async () => {
+  it('when successful', async () => {
     await productController.getById(request, response);
 
     expect(response.status.calledWith(200)).to.be.true;
@@ -51,7 +51,7 @@ describe('calls the productController getById', () => {
   })
 });
 
-describe('when fails', () => { 
+describe('in fail cases', () => { 
   const response = {};
   const request = {};
 	before(() => {
@@ -65,7 +65,7 @@ describe('when fails', () => {
     productService.getById.restore();
   })
 
-  it('fail case', async () => {
+  it('expect to be false', async () => {
     await productController.getById(request, response);
 
     expect(response.status.calledWith(404)).to.be.true;
@@ -74,7 +74,7 @@ describe('when fails', () => {
 });
 
 describe('Checks createProduct', () => { 
-  describe('when sucessfull', () => { 
+  describe('create a  product', () => { 
     const response = {};
     const request = {};
     beforeEach(() => {
@@ -89,7 +89,7 @@ describe('Checks createProduct', () => {
       productService.createProduct.restore();
     })
 
-    it('sucess case', async () => {
+    it('when successful', async () => {
       await productController.createProduct(request, response);
 
       expect(response.status.calledWith(201)).to.be.true;
@@ -98,7 +98,7 @@ describe('Checks createProduct', () => {
   });
   });
   describe('Checks updateProduct', () => { 
-    describe('when sucessfull', () => { 
+    describe('update a product', () => { 
       const response = {};
       const request = {};
       beforeEach(() => {
@@ -113,7 +113,7 @@ describe('Checks createProduct', () => {
         productService.updateProduct.restore();
       })
   
-      it('sucess case', async () => {
+      it('when successful', async () => {
         await productController.updateProduct(request, response);
   
         expect(response.status.calledWith(200)).to.be.true;

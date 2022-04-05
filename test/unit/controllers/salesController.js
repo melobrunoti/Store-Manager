@@ -6,7 +6,7 @@ const salesController = require('../../../controllers/salesController');
 const { fakeSales } = require('../data/mocks');
 
 describe('calls the salesController getAll', () => { 
-  describe('when succesfull', () => { 
+  describe('get all sales', () => { 
   const response = {};
   const request = {};
 	before(() => {
@@ -19,7 +19,7 @@ describe('calls the salesController getAll', () => {
     salesService.getAll.restore();
   })
 
-  it('sucess case', async () => {
+  it('when successful', async () => {
     await salesController.getAll(request, response);
 
     expect(response.status.calledWith(200)).to.be.true;
@@ -28,7 +28,7 @@ describe('calls the salesController getAll', () => {
 })
 
 describe('calls the salesController getById', () => { 
-  describe('when succesfull', () => { 
+  describe('get a sale by id', () => { 
   const response = {};
   const request = {};
 	before(() => {
@@ -42,7 +42,7 @@ describe('calls the salesController getById', () => {
     salesService.getById.restore();
   })
 
-  it('sucess case', async () => {
+  it('when successful', async () => {
     await salesController.getById(request, response);
 
     expect(response.status.calledWith(200)).to.be.true;
@@ -64,7 +64,7 @@ describe('when fails', () => {
     salesService.getById.restore();
   })
 
-  it('fail case', async () => {
+  it('returns false', async () => {
     await salesController.getById(request, response);
 
     expect(response.status.calledWith(404)).to.be.true;
