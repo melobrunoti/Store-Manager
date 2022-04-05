@@ -47,6 +47,14 @@ const nameValidator = async (name) => {
   return result;
 };
 
+const verifyQuantity = async ({ productId, quantity }) => {
+  const product = await productModel.getById(productId);
+  if ((product.quantity - quantity) < 0) {
+    return false;
+  }
+  return true;
+};
+
 module.exports = {
   getAll,
   getById,
@@ -54,4 +62,5 @@ module.exports = {
   nameValidator,
   updateProduct,
   deleteProduct,
+  verifyQuantity,
 };

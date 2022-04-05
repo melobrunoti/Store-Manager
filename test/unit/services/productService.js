@@ -97,8 +97,8 @@ const { fakeProducts, fakeUpdate } = require('../data/mocks');
 
     it('when sucessfull', async () => {
       const response = await productService.deleteProduct(1);
-      console.log(response)
       
       expect(response).to.be.equal(true)
     })
   });
+

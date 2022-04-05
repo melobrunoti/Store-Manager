@@ -42,3 +42,6 @@ describe('Checks  getById', () => {
     expect(response).to.be.equal(fakeSales[0]);
   })
 });
+
+
+

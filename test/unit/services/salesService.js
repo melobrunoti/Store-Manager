@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const salesModel = require('../../../models/salesModel');
 const salesService = require('../../../services/salesService');
 
-const { fakeSales } = require('../data/mocks');
+const { fakeSales, fakeCreatedSale } = require('../data/mocks');
 
 describe('Checks products getAll', () => { 
 	before(async () => {
@@ -41,3 +41,20 @@ describe('Checks  getById', () => {
     expect(response).to.deep.eq(fakeSales[0]);
   })
 });
+describe('Checks createSale', () => {
+
+  beforeEach(async () => {
+    sinon.stub(salesModel, 'createSale').resolves({ id: 1, itemsSold: fakeCreatedSale});
+  });
+
+  afterEach(async () => {
+    salesModel.createSale.restore();
+  });
+
+  it('when success', async () => {
+    const response = await salesService.createSale(fakeCreatedSale);
+
+    expect(response).to.deep.equal({ id: 1, itemsSold: fakeCreatedSale })
+  })
+
+})

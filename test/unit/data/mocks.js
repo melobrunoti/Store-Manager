@@ -39,5 +39,14 @@ const fakeSales = [
 
 const fakeUpdate = { id: 1, name: 'A volta dos que nao foram', quantity: 10 }
 
+const fakeCreatedSale =   {
+	"id": 1,
+	"itemsSold": [
+		{
+			"productId": 1,
+			"quantity": 3
+		}
+	]
+}
 
 module.exports = { fakeProducts, fakeSales, fakeUpdate };

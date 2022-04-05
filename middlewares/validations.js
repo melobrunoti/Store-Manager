@@ -1,7 +1,7 @@
 const { productScheme } = require('../helpers/productScheme');
 const { salesScheme } = require('../helpers/salesScheme');
-const { nameValidator } = require('../services/productService');
-
+const { nameValidator, verifyQuantity } = require('../services/productService');
+  
 const validateProduct = (req, res, next) => {
   const { error } = productScheme.validate(req.body);
 
@@ -37,8 +37,17 @@ const nameVerifier = async (req, res, next) => {
   next();
 };
 
+const quantityVerifier = async (req, res, next) => {
+  const items = req.body;
+  const isValid = await Promise.all(items.map((product) => verifyQuantity(product)));
+  if (isValid.some((quantity) => quantity === false)) {
+    return res.status(422).json({ message: 'Such amount is not permitted to sell' });
+  }
+  next();
+};
 module.exports = {
   validateProduct,
   nameVerifier,
   saleValidate,
+  quantityVerifier,
 };
