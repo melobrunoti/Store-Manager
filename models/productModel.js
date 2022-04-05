@@ -44,10 +44,24 @@ const deleteProduct = async (id) => {
   return true;
 };
 
+const changeQuantity = async ({ id, quantity, add = true }) => {
+  const { quantity: oldValue } = await getById(id);
+  
+   const newValue = add ? oldValue + quantity : oldValue - quantity;
+
+  await connection.execute(
+    'UPDATE StoreManager.products SET quantity = ? WHERE id = ?',
+    [newValue, id],
+    );
+
+  return { id, quantity };
+};
+
 module.exports = {
   getAll,
   getById,
   createProduct,
   updateProduct,
   deleteProduct,
+  changeQuantity,
 };

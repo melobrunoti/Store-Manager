@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const { changeQuantity } = require('./productModel');
 
 const getAll = async () => {
   const [sales] = await connection.execute(
@@ -42,6 +43,10 @@ const createSale = async (items) => {
     [sale.insertId, productId, quantity]);
   }));
 
+  await Promise.all(items.map(({ productId, quantity }) => (
+    changeQuantity({ id: productId, quantity, add: false })
+  )));
+
   return {
     id: sale.insertId,
     itemsSold: items,
@@ -62,10 +67,17 @@ const updateSale = async (items, id) => {
 };
 
 const deleteSale = async (id) => {
+  const sales = await getById(id);
+  
+  await Promise.all(sales.map(({ productId, quantity }) => (
+    changeQuantity({ id: productId, quantity })
+  )));
+
   await connection.execute(
     'DELETE FROM StoreManager.sales WHERE id = ?',
     [id],
     );
+
   return true;
 };
 
